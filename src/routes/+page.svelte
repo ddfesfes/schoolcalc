@@ -63,7 +63,7 @@
     function calculateGrade(): void | number {
         if (!semesterValues.firstSemester || !semesterValues.secondSemester || 
             semesterValues.firstSemester.length < 7 || semesterValues.secondSemester.length < 7) {
-            return; // 등급이 다 채워지지 않음 오류 전송
+            return; // TODO: 등급이 다 채워지지 않음 오류 전송
         }
 
         const firstSemGrades: string = String(semesterValues.firstSemester).split('');
