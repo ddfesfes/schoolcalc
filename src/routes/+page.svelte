@@ -66,19 +66,19 @@
             return; // 등급이 다 채워지지 않음 오류 전송
         }
 
-        const firstSemGrades = String(semesterValues.firstSemester).split('');
-        let totalScore = 0;
-        let totalWeight = 0;
+        const firstSemGrades: string = String(semesterValues.firstSemester).split('');
+        let totalScore: number = 0;
+        let totalWeight: number = 0;
         
         Object.entries(byeolgaramWeights).forEach(([subject, weight], index) => {
-            const grade = parseInt(firstSemGrades[index]);
+            const grade: number = parseInt(firstSemGrades[index]);
             if (!isNaN(grade)) {
                 totalScore += grade * (weight as number);
                 totalWeight += weight as number;
             }
         });
         
-        const finalScore = Number((totalScore / totalWeight).toFixed(2));
+        const finalScore: number = Number((totalScore / totalWeight).toFixed(2));
         console.log(finalScore);
         return finalScore;
     }
