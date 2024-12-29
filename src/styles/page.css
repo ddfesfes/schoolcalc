@@ -209,21 +209,40 @@ input::placeholder {
     }
 
     .custom-select {
-        position: static;
-        margin-bottom: 20px;
-        width: 80%;
+        position: relative;
+        display: inline-block;
+        width: 120px;
+        background-color: white; /* 배경색 명시적으로 설정 */
+        border: 1px solid #000;
+        border-radius: 20px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
     }
 
     .custom-select::after {
         content: '▼';
         position: absolute;
-        right: 4px;
-        top: 50%;
-        transform: translateY(-50%);
+        right: 10px;
+        top: 50%; /* 화살표 중앙 배치 */
+        transform: translateY(-50%); /* 중앙 정렬 */
         pointer-events: none;
         font-size: 10px;
     }
 
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 100%;
+        padding: 8px 12px;
+        background: transparent; /* 배경 투명으로 설정 */
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        outline: none;
+    }
+    
     .input-wrapper {
         width: 80%;
     }
