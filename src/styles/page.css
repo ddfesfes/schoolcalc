@@ -154,4 +154,88 @@ input::placeholder {
 .input-container {
     display: flex;
     align-items: center;
+}
+
+.result-section {
+    margin-top: 90px;
+    text-align: center;
+}
+
+.result-text {
+    color: #000;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.result-score {
+    color: #908BFF;
+    font-size: 40px;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.grade-boxes {
+    margin-top: 20px;
+}
+
+.grade-category {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.category-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.more-info {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.grade-circles {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.grade-item {
+    text-align: center;
+    flex: 1;
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+}
+
+.school-name {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.grade-value {
+    font-size: 14px;
+    color: #00ff00;
+}
+
+.grade-value.red {
+    color: #FF6B6B;
 } 

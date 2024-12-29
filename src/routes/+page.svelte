@@ -16,6 +16,7 @@
     }
 
     let calculated: boolean = false;
+    let calculatedGrade: number = 0;
 
     let selectedValue: SelectedValue = 'front';
     let semesterValues: SemesterValues = {
@@ -66,7 +67,7 @@
             return; // TODO: 등급이 다 채워지지 않음 오류 전송
         }
 
-        const firstSemGrades: string = String(semesterValues.firstSemester).split('');
+        const firstSemGrades: string[] = String(semesterValues.firstSemester).split('');
         let totalScore: number = 0;
         let totalWeight: number = 0;
         
@@ -79,52 +80,116 @@
         });
         
         const finalScore: number = Number((totalScore / totalWeight).toFixed(2));
-        console.log(finalScore);
+        calculatedGrade = finalScore;
         return finalScore;
     }
 </script>
-
 <div class="box">
-    <h1 class="title">내신 등급 계산기</h1>
-    
-    <div class="custom-select">
-        <select bind:value={selectedValue}>
-            <option value="front">앞반</option>
-            <option value="back">뒷반</option>
-        </select>
+{#if !calculated}
+<h1 class="title">내신 등급 계산기</h1>
+
+<div class="custom-select">
+    <select bind:value={selectedValue}>
+        <option value="front">앞반</option>
+        <option value="back">뒷반</option>
+    </select>
+</div>
+
+<div id="inputs">
+    {#each semesterList as semester}
+        <div class="input-wrapper">
+            <label for={semester.id} class="label">{semester.label}</label>
+            <div class="input-container">
+                <input
+                    id={semester.id}
+                    type="number"
+                    on:keypress={inputKeyPressed}
+                    placeholder={getPlaceholder(semester.id, selectedValue)}
+                    bind:value={semesterValues[semester.id]}
+                />
+                {#if semesterValues[semester.id]}
+                    <button 
+                        class="delete-btn"
+                        on:click={() => semesterValues[semester.id] = ''}>
+                        ×
+                    </button>
+                {/if}
+            </div>
+        </div>
+    {/each}
+</div>
+
+<button class="calculate-btn" on:click={() => {
+    calculateGrade()
+    calculated = true;
+}}>
+    계산하기
+</button>
+{:else}
+<div class="result-section">
+    <div class="result-text">
+        당신의 전과목 내신 점수는...<span class="result-score">{calculatedGrade}</span>
     </div>
 
-    <div id="inputs">
-        {#each semesterList as semester}
-            <div class="input-wrapper">
-                <label for={semester.id} class="label">{semester.label}</label>
-                <div class="input-container">
-                    <input
-                        id={semester.id}
-                        type="number"
-                        on:keypress={inputKeyPressed}
-                        placeholder={getPlaceholder(semester.id, selectedValue)}
-                        bind:value={semesterValues[semester.id]}
-                    />
-                    {#if semesterValues[semester.id]}
-                        <button 
-                            class="delete-btn"
-                            on:click={() => semesterValues[semester.id] = ''}>
-                            ×
-                        </button>
-                    {/if}
+    <div class="grade-boxes">
+        <div class="grade-category">
+            <div class="category-header">
+                <span class="category-title">교과</span>
+                <a href="#" class="more-info">자세히보기 ▶</a>
+            </div>
+            <div class="grade-circles">
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="school-name">아무개전형 - <div class="grade-value red">1.1</div></div>
+                </div>
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value">아무개전형 - 1.2</div>
+                </div>
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value">아무개전형 - 1.4</div>
+                </div>
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value">아무개전형 - 1.5</div>
                 </div>
             </div>
-        {/each}
-    </div>
-
-    <button class="calculate-btn" on:click={calculateGrade}>
-        계산하기
-    </button>
-
-    {#if calculated}
-        <div>
-
         </div>
-    {/if}
+
+        <div class="grade-category">
+            <div class="category-header">
+                <span class="category-title">학종</span>
+                <a href="#" class="more-info">자세히보기 ▶</a>
+            </div>
+            <div class="grade-circles">
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value red">아무개전형 - 1.1</div>
+                </div>
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value">아무개전형 - 1.2</div>
+                </div>
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value">아무개전형 - 1.4</div>
+                </div>
+                <div class="grade-item">
+                    <div class="circle"></div>
+                    <div class="school-name">아무개대학교</div>
+                    <div class="grade-value">아무개전형 - 1.5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
 </div>
