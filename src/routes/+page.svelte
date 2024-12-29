@@ -68,18 +68,21 @@
         }
 
         const firstSemGrades: string[] = String(semesterValues.firstSemester).split('');
+        const secondSemGrades: string[] = String(semesterValues.secondSemester).split('');
         let totalScore: number = 0;
         let totalWeight: number = 0;
         
         Object.entries(byeolgaramWeights).forEach(([subject, weight], index) => {
             const grade: number = parseInt(firstSemGrades[index]);
+            const secondGrade: number = parseInt(secondSemGrades[index]);
             if (!isNaN(grade)) {
                 totalScore += grade * (weight as number);
+                totalScore += secondGrade * (weight as number);
                 totalWeight += weight as number;
             }
         });
         
-        const finalScore: number = Number((totalScore / totalWeight).toFixed(2));
+        const finalScore: number = Number((totalScore / (totalWeight * 2)).toFixed(2));
         calculatedGrade = finalScore;
         return finalScore;
     }
