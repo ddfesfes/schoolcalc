@@ -214,6 +214,16 @@ input::placeholder {
         width: 80%;
     }
 
+    .custom-select::after {
+        content: '▼';
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        font-size: 10px;
+    }
+
     .input-wrapper {
         width: 80%;
     }
