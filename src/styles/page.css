@@ -15,6 +15,7 @@
     font-weight: bold;
     font-size: 40px;
     margin-top: 40px;
+    text-align: center;
 }
 
 #inputs {
@@ -78,18 +79,6 @@ select:focus {
     padding: 0 4px;
 }
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox  */
-input[type='number'] {
-  -moz-appearance: textfield;
-}
-
 input {
     width: 100%;
     padding: 10px 12px;
@@ -123,37 +112,6 @@ input::placeholder {
 
 .calculate-btn:hover {
     background-color: #6D28D9;
-}
-
-.grade-display {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 10px;
-    background: #f0f0f0;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.delete-btn {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: none;
-    color: #666;
-    cursor: pointer;
-    padding: 0 4px;
-}
-
-.delete-btn:hover {
-    color: #ff0000;
-}
-
-.input-container {
-    display: flex;
-    align-items: center;
 }
 
 .result-section {
@@ -238,4 +196,56 @@ input::placeholder {
 
 .grade-value.red {
     color: #FF6B6B;
-} 
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 32px;
+        margin-top: 20px;
+    }
+
+    #inputs {
+        margin-top: 100px;
+    }
+
+    .custom-select {
+        position: static;
+        margin-bottom: 20px;
+        width: 80%;
+    }
+
+    .input-wrapper {
+        width: 80%;
+    }
+
+    .calculate-btn {
+        width: 80%;
+        font-size: 14px;
+    }
+
+    .result-section {
+        margin-top: 50px;
+    }
+
+    .result-text {
+        font-size: 20px;
+    }
+
+    .result-score {
+        font-size: 30px;
+    }
+
+    .grade-category {
+        padding: 15px;
+    }
+
+    .grade-circles {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .circle {
+        width: 60px;
+        height: 60px;
+    }
+}
