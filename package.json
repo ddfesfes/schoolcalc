@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "npm i @sveltejs/adapter-cloudflare && vite build",
+		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
@@ -19,5 +19,8 @@
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.7.2",
 		"vite": "^5.4.11"
+	},
+	"dependencies": {
+		"@sveltejs/adapter-cloudflare": "^5.0.0"
 	}
 }

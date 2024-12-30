@@ -210,25 +210,37 @@ input::placeholder {
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .grade-item {
     text-align: center;
     flex: 1;
+    min-width: 120px;
+    padding: 0 10px;
 }
 
-.circle {
+.univ-icon {
     width: 80px;
     height: 80px;
-    background: #f0f0f0;
-    border-radius: 50%;
     margin: 0 auto 10px;
+    object-fit: contain;
 }
 
 .school-name {
     font-size: 14px;
     color: #333;
-    margin-bottom: 4px;
+    word-break: keep-all;
+    margin: 0 5px;
+    line-height: 1.2;
+}
+
+.department-name {
+    font-size: 12px;
+    color: #333;
+    word-break: keep-all;
+    margin: 0 5px;
+    line-height: 1.2;
 }
 
 .grade-value {
@@ -237,7 +249,7 @@ input::placeholder {
 }
 
 .grade-value.red {
-    color: #FF6B6B;
+    color: #ff0000;
 } 
 
 @media (max-width: 768px) {
@@ -318,5 +330,42 @@ input::placeholder {
     .circle {
         width: 60px;
         height: 60px;
+    }
+
+    .grade-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        min-width: 100%;
+    }
+
+    .univ-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+    }
+
+    .school-info {
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+        padding-right: 10px;
+    }
+
+    .school-name {
+        margin-bottom: 2px;
+    }
+
+    .grade-value {
+        flex-shrink: 0;
+        margin-left: auto;
+        font-weight: bold;
+    }
+
+    .school-name, .department-name {
+        word-break: keep-all;
+        white-space: normal;
     }
 }

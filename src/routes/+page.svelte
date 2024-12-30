@@ -1,6 +1,9 @@
 <script lang="ts">
+    import subjectData from '$lib/typesData/subject.json';
+    import { findNearValues, type ValueInfo } from '$lib/utils/findNearValues';
+
     import '../styles/page.css';
-    import byeolgaramWeights from '../lib/weights/byeolgaram1.json';
+    import byeolgaramWeights from '$lib/weights/byeolgaram1.json';
 
     type SemesterID = 'firstSemester' | 'secondSemester';
     type SelectedValue = 'front' | 'back';
@@ -17,11 +20,48 @@
 
     let calculated: boolean = false;
     let calculatedGrade: number = 0;
+    let nearValues: ValueInfo[] = [];
+    
+    let schools: Array<{univ: string, department: string, grade: number}> = [];
+    $: {
+        try {
+            if (nearValues?.length > 0) {
+                schools = nearValues
+                    .filter(item => item && item.university && item.department && item.value)
+                    .map(item => ({
+                        univ: item.university,
+                        department: item.department,
+                        grade: item.value
+                    }));
+            } else {
+                schools = [];
+            }
+        } catch (error) {
+            console.error('Error processing nearValues:', error);
+            schools = [];
+        }
+    }
 
     let selectedValue: SelectedValue = 'front';
     let semesterValues: SemesterValues = {
         firstSemester: '',
         secondSemester: ''
+    };
+
+    const univNameBind: { [key: string]: string } = {
+        '서울대학교': 'seoul',
+        '연세대학교': 'yonsei',
+        '고려대학교': 'korea',
+        '서강대학교': 'sogang',
+        '성균관대학교': 'skku',
+        '한양대학교': 'hanyang',
+        '중앙대학교': 'cau',
+        '경희대학교': 'kyunghee',
+        '한국외국어대학교': 'hufs',
+        '서울시립대학교': 'uos',
+        '건국대학교': 'konkuk',
+        '동국대학교': 'dongguk',
+        '홍익대학교': 'hongik'
     };
 
     const semesterList: SemesterItem[] = [
@@ -75,15 +115,17 @@
         Object.entries(byeolgaramWeights).forEach(([subject, weight], index) => {
             const grade: number = parseInt(firstSemGrades[index]);
             const secondGrade: number = parseInt(secondSemGrades[index]);
-            if (!isNaN(grade)) {
+            if (!isNaN(grade) && !isNaN(secondGrade)) {
                 totalScore += grade * (weight as number);
                 totalScore += secondGrade * (weight as number);
-                totalWeight += weight as number;
+                totalWeight += (weight as number) * 2;
             }
         });
         
-        const finalScore: number = Number((totalScore / (totalWeight * 2)).toFixed(2));
+        const finalScore: number = Number((totalScore / totalWeight).toFixed(2));
         calculatedGrade = finalScore;
+        nearValues = findNearValues(subjectData, finalScore);
+        calculated = true;
         return finalScore;
     }
 </script>
@@ -122,10 +164,7 @@
     {/each}
 </div>
 
-<button class="calculate-btn" on:click={() => {
-    calculateGrade()
-    calculated = true;
-}}>
+<button class="calculate-btn" on:click={() => calculateGrade()}>
     계산하기
 </button>
 {:else}
@@ -138,58 +177,42 @@
         <div class="grade-category">
             <div class="category-header">
                 <span class="category-title">교과</span>
-                <a href="#" class="more-info">자세히보기 ▶</a>
+                <a href="" class="more-info">자세히보기 ▶</a>
             </div>
             <div class="grade-circles">
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="school-name">아무개전형 - <div class="grade-value red">1.1</div></div>
-                </div>
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value">아무개전형 - 1.2</div>
-                </div>
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value">아무개전형 - 1.4</div>
-                </div>
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value">아무개전형 - 1.5</div>
-                </div>
+                {#each schools as school}
+                    <div class="grade-item">
+                        <img 
+                            src="/univIcons/{univNameBind[school.univ]}.svg"
+                            alt="{school.univ} 로고" 
+                            class="univ-icon"
+                        />
+                        <div class="school-name">{school.univ}</div>
+                        <div class="department-name">{school.department}</div>
+                        <div class={`grade-value ${school.grade <= calculatedGrade ? 'red' : ''}`}>{school.grade}</div>
+                    </div>
+                {/each}
             </div>
         </div>
 
         <div class="grade-category">
             <div class="category-header">
                 <span class="category-title">학종</span>
-                <a href="#" class="more-info">자세히보기 ▶</a>
+                <a href="" class="more-info">자세히보기 ▶</a>
             </div>
             <div class="grade-circles">
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value red">아무개전형 - 1.1</div>
-                </div>
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value">아무개전형 - 1.2</div>
-                </div>
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value">아무개전형 - 1.4</div>
-                </div>
-                <div class="grade-item">
-                    <div class="circle"></div>
-                    <div class="school-name">아무개대학교</div>
-                    <div class="grade-value">아무개전형 - 1.5</div>
-                </div>
+                {#each schools as school}
+                    <div class="grade-item">
+                        <img 
+                            src="/univIcons/{univNameBind[school.univ]}.svg" 
+                            alt="{school.univ} 로고" 
+                            class="univ-icon"
+                        />
+                        <div class="school-name">{school.univ}</div>
+                        <div class="department-name">{school.department}</div>
+                        <div class={`grade-value ${school.grade <= calculatedGrade ? 'red' : ''}`}>{school.grade}</div>
+                    </div>
+                {/each}
             </div>
         </div>
     </div>
