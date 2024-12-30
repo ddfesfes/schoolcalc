@@ -24,6 +24,5 @@ vite.config.ts.timestamp-*
 
 # Data
 data.txt
-/src/lib/typesData
 
 TODO.md
