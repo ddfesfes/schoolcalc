@@ -324,7 +324,7 @@ input::placeholder {
 
     .grade-circles {
         flex-direction: column;
-        gap: 10px;
+        gap: 0;
     }
 
     .circle {
@@ -335,37 +335,40 @@ input::placeholder {
     .grade-item {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 10px;
+        /* 위 | 오른쪽 | 아래 | 왼쪽 */
+        padding: 12px 16px 12px 0px;
         border-bottom: 1px solid #eee;
-        min-width: 100%;
     }
 
     .univ-icon {
         width: 40px;
         height: 40px;
         flex-shrink: 0;
+        margin-right: 12px;
+        object-fit: scale-down;
+        object-position: left;
+        flex-basis: 40px;
     }
 
     .school-info {
         flex: 1;
-        min-width: 0;
-        text-align: left;
-        padding-right: 10px;
     }
 
     .school-name {
-        margin-bottom: 2px;
+        font-size: 14px;
+        margin: 0 6px 0 0;
+    }
+
+    .department-name {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
     }
 
     .grade-value {
-        flex-shrink: 0;
-        margin-left: auto;
+        margin-left: 16px;
         font-weight: bold;
-    }
-
-    .school-name, .department-name {
-        word-break: keep-all;
-        white-space: normal;
+        min-width: 40px;
+        text-align: right;
     }
 }
