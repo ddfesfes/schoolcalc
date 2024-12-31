@@ -32,7 +32,7 @@ with open(libPath + 'subject.json', 'w', encoding='UTF-8-sig') as file:
     file.write(json.dumps(first, ensure_ascii=False, indent=4))
 
 with open(libPath + 'total.json', 'w', encoding='UTF-8-sig') as file:
-    file.write(json.dumps(second, ensure_ascii=False))
+    file.write(json.dumps(second, ensure_ascii=False, indent=4))
 
 '''
 {

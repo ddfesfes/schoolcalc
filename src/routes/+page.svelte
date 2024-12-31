@@ -1,4 +1,5 @@
 <script lang="ts">
+    import totalData from '$lib/typesData/total.json';
     import subjectData from '$lib/typesData/subject.json';
     import { findNearValues, type ValueInfo } from '$lib/utils/findNearValues';
 
@@ -75,6 +76,10 @@
         }
     ];
 
+    function openTotalModal(event: Event) {
+        console.log('clicked');
+    }
+
     function getPlaceholder(semesterId: SemesterID, selectedValue: SelectedValue): string {
         const firstSemText = '등급 입력(ex: 1111111 | 수-영-국-과-사-한-한문)';
         const secondSemText = '등급 입력(ex: 1111111 | 수-영-국-과-사-한-기가)';
@@ -124,7 +129,7 @@
         
         const finalScore: number = Number((totalScore / totalWeight).toFixed(2));
         calculatedGrade = finalScore;
-        nearValues = findNearValues(subjectData, finalScore);
+        nearValues = findNearValues(totalData, finalScore);
         calculated = true;
         return finalScore;
     }
@@ -176,8 +181,8 @@
     <div class="grade-boxes">
         <div class="grade-category">
             <div class="category-header">
-                <span class="category-title">교과</span>
-                <a href="" class="more-info">자세히보기 ▶</a>
+                <span class="category-title">학종</span>
+                <p on:click={openTotalModal} class="more-info">자세히보기 ▶</p>
             </div>
             <div class="grade-circles">
                 {#each schools as school}
@@ -195,9 +200,9 @@
             </div>
         </div>
 
-        <div class="grade-category">
+        <!-- <div class="grade-category">
             <div class="category-header">
-                <span class="category-title">학종</span>
+                <span class="category-title">교과</span>
                 <a href="" class="more-info">자세히보기 ▶</a>
             </div>
             <div class="grade-circles">
@@ -214,7 +219,7 @@
                     </div>
                 {/each}
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 {/if}
