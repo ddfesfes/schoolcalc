@@ -334,7 +334,7 @@ input::placeholder {
 
     .grade-item {
         display: flex;
-        align-items: center;
+        align-items: start;
         /* 위 | 오른쪽 | 아래 | 왼쪽 */
         padding: 12px 16px 12px 0px;
         border-bottom: 1px solid #eee;
