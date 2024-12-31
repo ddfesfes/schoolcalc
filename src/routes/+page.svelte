@@ -182,16 +182,14 @@
             <div class="grade-circles">
                 {#each schools as school}
                     <div class="grade-item">
-                        <div class="align-left">
-                            <img 
-                                src="/univIcons/{univNameBind[school.univ]}.svg"
-                                alt="{school.univ} 로고" 
-                                class="univ-icon"
-                             />
-                            <div class="school-name">{school.univ}</div>
-                            <div class="department-name">{school.department}</div>
-                         </div>
-                         <div class={`grade-value ${school.grade <= calculatedGrade ? 'red' : ''}`}>{school.grade}</div>
+                        <img 
+                            src="/univIcons/{univNameBind[school.univ]}.svg"
+                            alt="{school.univ} 로고" 
+                            class="univ-icon"
+                        />
+                        <div class="school-name">{school.univ}</div>
+                        <div class="department-name">{school.department}</div>
+                        <div class={`grade-value ${school.grade <= calculatedGrade ? 'red' : ''}`}>{school.grade}</div>
                     </div>
                 {/each}
             </div>
