@@ -4,10 +4,9 @@
     import { findNearValues, type ValueInfo } from '$lib/utils/findNearValues';
 
     import '../styles/page.css';
-    import byeolgaramWeights from '$lib/weights/byeolgaram1.json';
+    import typicalWeights from '$lib/weights/typical.json';
 
     type SemesterID = 'firstSemester' | 'secondSemester';
-    type SelectedValue = 'front' | 'back';
 
     interface SemesterValues {
         firstSemester: string;
@@ -43,7 +42,6 @@
         }
     }
 
-    let selectedValue: SelectedValue = 'front';
     let semesterValues: SemesterValues = {
         firstSemester: '',
         secondSemester: ''
@@ -80,17 +78,6 @@
         console.log('clicked');
     }
 
-    function getPlaceholder(semesterId: SemesterID, selectedValue: SelectedValue): string {
-        const firstSemText = '등급 입력(ex: 1111111 | 수-영-국-과-사-한-한문)';
-        const secondSemText = '등급 입력(ex: 1111111 | 수-영-국-과-사-한-기가)';
-        
-        if (selectedValue === 'front') {
-            return semesterId === 'firstSemester' ? firstSemText : secondSemText;
-        } else {
-            return semesterId === 'firstSemester' ? secondSemText : firstSemText;
-        }
-    }
-
     function inputKeyPressed(evt: KeyboardEvent): void {
         const key = evt.key;
         const input = evt.target as HTMLInputElement;
@@ -117,7 +104,7 @@
         let totalScore: number = 0;
         let totalWeight: number = 0;
         
-        Object.entries(byeolgaramWeights).forEach(([subject, weight], index) => {
+        Object.entries(typicalWeights).forEach(([subject, weight], index) => {
             const grade: number = parseInt(firstSemGrades[index]);
             const secondGrade: number = parseInt(secondSemGrades[index]);
             if (!isNaN(grade) && !isNaN(secondGrade)) {
@@ -138,13 +125,6 @@
 {#if !calculated}
 <h1 class="title">내신 등급 계산기</h1>
 
-<div class="custom-select">
-    <select bind:value={selectedValue}>
-        <option value="front">앞반</option>
-        <option value="back">뒷반</option>
-    </select>
-</div>
-
 <div id="inputs">
     {#each semesterList as semester}
         <div class="input-wrapper">
@@ -154,14 +134,14 @@
                     id={semester.id}
                     type="number"
                     on:keypress={inputKeyPressed}
-                    placeholder={getPlaceholder(semester.id, selectedValue)}
+                    placeholder="등급 입력(ex: 1111111 | 수-영-국-과-사-한-기타과목)"
                     bind:value={semesterValues[semester.id]}
                 />
                 {#if semesterValues[semester.id]}
                     <button 
                         class="delete-btn"
                         on:click={() => semesterValues[semester.id] = ''}>
-                        ×
+                        x
                     </button>
                 {/if}
             </div>
@@ -182,7 +162,7 @@
         <div class="grade-category">
             <div class="category-header">
                 <span class="category-title">학종</span>
-                <p on:click={openTotalModal} class="more-info">자세히보기 ▶</p>
+                <button on:click={openTotalModal} class="more-info">자세히보기 ▶</button>
             </div>
             <div class="grade-circles">
                 {#each schools as school}
